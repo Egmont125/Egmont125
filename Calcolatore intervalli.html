@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolatore di Intervalli Musicali</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #282c34;
+            color: #7aa7c7; /* Colore azzurro più sfumato */
+            text-align: center;
+            padding: 50px;
+        }
+
+        .container {
+            background-color: #20232a;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+            display: inline-block;
+            width: 350px;
+        }
+
+        select, button {
+            font-size: 16px;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+        }
+
+        select {
+            background-color: #7aa7c7; /* Colore azzurro più sfumato */
+            color: #20232a;
+        }
+
+        button {
+            background-color: #7aa7c7; /* Colore azzurro più sfumato */
+            color: #20232a;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #5e8aa0; /* Colore leggermente più scuro per l'hover */
+        }
+
+        .result {
+            font-size: 18px;
+            margin-top: 20px;
+            color: #fff;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .revolto {
+            margin-top: 20px;
+            font-size: 16px;
+            padding: 10px 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calcolatore di Intervalli Musicali</h1>
+        <label for="nota1">Seleziona la prima nota:</label>
+        <select id="nota1">
+            <option value="0">Do</option>
+            <option value="1">Do#/Re♭</option>
+            <option value="2">Re</option>
+            <option value="3">Re#/Mi♭</option>
+            <option value="4">Mi</option>
+            <option value="5">Fa</option>
+            <option value="6">Fa#/Sol♭</option>
+            <option value="7">Sol</option>
+            <option value="8">Sol#/La♭</option>
+            <option value="9">La</option>
+            <option value="10">La#/Si♭</option>
+            <option value="11">Si</option>
+        </select>
+
+        <label for="nota2">Seleziona la seconda nota:</label>
+        <select id="nota2">
+            <option value="0">Do</option>
+            <option value="1">Do#/Re♭</option>
+            <option value="2">Re</option>
+            <option value="3">Re#/Mi♭</option>
+            <option value="4">Mi</option>
+            <option value="5">Fa</option>
+            <option value="6">Fa#/Sol♭</option>
+            <option value="7">Sol</option>
+            <option value="8">Sol#/La♭</option>
+            <option value="9">La</option>
+            <option value="10">La#/Si♭</option>
+            <option value="11">Si</option>
+        </select>
+
+        <button onclick="calcolaIntervallo()">Calcola Intervallo</button>
+
+        <div class="result" id="risultato"></div>
+        
+        <button id="revoltoBtn" class="revolto hidden" onclick="calcolaRivolto()">Calcola Rivolto</button>
+        <div class="result" id="risultatoRivolto"></div>
+    </div>
+
+    <script>
+        let intervalli = [
+            "Unisono", "Seconda Minore", "Seconda Maggiore", "Terza Minore", 
+            "Terza Maggiore", "Quarta Giusta", "Tritono", "Quinta Giusta", 
+            "Sesta Minore", "Sesta Maggiore", "Settima Minore", "Settima Maggiore"
+        ];
+
+        function calcolaIntervallo() {
+            const nota1 = parseInt(document.getElementById("nota1").value);
+            const nota2 = parseInt(document.getElementById("nota2").value);
+
+            // Calcola la differenza tra le due note, facendo attenzione al ciclo della scala cromatica
+            let intervallo = (nota2 - nota1 + 12) % 12;
+
+            // Mostra il risultato
+            document.getElementById("risultato").innerHTML = `L'intervallo è: ${intervalli[intervallo]}`;
+            
+            // Nascondi e azzera il risultato del rivolto
+            document.getElementById("revoltoBtn").classList.remove("hidden");
+            document.getElementById("risultatoRivolto").innerHTML = '';
+        }
+
+        function calcolaRivolto() {
+            const nota1 = parseInt(document.getElementById("nota1").value);
+            const nota2 = parseInt(document.getElementById("nota2").value);
+
+            // Calcola la differenza tra le due note e il loro rivolto
+            let intervallo = (nota2 - nota1 + 12) % 12;
+            let rivolto = (12 - intervallo) % 12;
+
+            // Mostra il risultato del rivolto
+            document.getElementById("risultatoRivolto").innerHTML = `Il rivolto è: ${intervalli[rivolto]}`;
+        }
+    </script>
+</body>
+</html>
